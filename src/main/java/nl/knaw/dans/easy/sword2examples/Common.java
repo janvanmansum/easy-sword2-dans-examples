@@ -15,6 +15,13 @@
  */
 package nl.knaw.dans.easy.sword2examples;
 
+import org.apache.abdera.Abdera;
+import org.apache.abdera.i18n.iri.IRI;
+import org.apache.abdera.model.Category;
+import org.apache.abdera.model.Document;
+import org.apache.abdera.model.Entry;
+import org.apache.abdera.model.Feed;
+import org.apache.abdera.parser.Parser;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -41,6 +48,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URI;
 import java.security.DigestInputStream;
+import java.util.List;
 
 public class Common {
     static final String BAGIT_URI = "http://purl.org/net/sword/package/BagIt";
@@ -59,44 +67,49 @@ public class Common {
         return new String(bos.toByteArray(), "UTF-8");
     }
 
-    /**
-     * Returns the result of evaluating the XPath expression <code>expr</code> on the XML code in the string <code>xml</code>
-     *
-     * @param xml
-     *        the XML to query
-     * @param expr
-     *        the XPath expression
-     * @return the result as a string
-     * @throws Exception
-     */
-    public static String getStringFromXml(String xml, String expr) throws Exception {
-        InputSource xmlSource = new InputSource(new StringReader(xml));
-        XPathFactory xpathFactory = XPathFactory.newInstance();
-        XPath xpath = xpathFactory.newXPath();
-        return (String) xpath.evaluate(expr, xmlSource, XPathConstants.STRING);
+    public static Entry parseEntry(String text) {
+        Abdera abdera = Abdera.getInstance();
+        Parser parser = abdera.getParser();
+        Document<Entry> receipt = parser.parse(new StringReader(text));
+        return receipt.getRoot();
     }
 
-    static void trackDeposit(CloseableHttpClient http, URI statIri) throws Exception {
+    public static Feed parseFeed(String text) {
+        Abdera abdera = Abdera.getInstance();
+        Parser parser = abdera.getParser();
+        Document<Feed> receipt = parser.parse(new StringReader(text));
+        return receipt.getRoot();
+    }
+
+    static void trackDeposit(CloseableHttpClient http, IRI statIri) throws Exception {
         CloseableHttpResponse response;
         String bodyText;
         System.out.println("Start polling Stat-IRI for the current status of the deposit, waiting 10 seconds before every request ...");
-        String state = null;
+        String stateTerm = null;
+        String stateText = null;
         while (true) {
             Thread.sleep(10000);
             System.out.print("Checking deposit status ... ");
-            response = http.execute(new HttpGet(statIri));
+            response = http.execute(new HttpGet(statIri.toURI()));
             bodyText = readEntityAsString(response.getEntity());
-            state = getStringFromXml(bodyText,
-                    "//*[local-name() = 'category' and @scheme = 'http://purl.org/net/sword/terms/state' and @label = 'State']/@term");
-            System.out.println(state);
-            if (state.equals("INVALID") || state.equals("REJECTED") || state.equals("FAILED")) {
+            Feed statement = parseFeed(bodyText);
+            List<Category> states = statement.getCategories("http://purl.org/net/sword/terms/state");
+            if (states.size() < 1) {
+                System.err.println("ERROR: NO STATE FOUND");
+                System.exit(1);
+            } else if (states.size() > 1) {
+                System.err.println("ERROR: FOUND TOO MANY STATES (" + states.size() + "). CAN ONLY HANDLE ONE");
+                System.exit(1);
+            }
+            stateTerm = states.get(0).getTerm();
+            stateText = states.get(0).getText();
+            System.out.println(stateTerm);
+            if (stateTerm.equals("INVALID") || stateTerm.equals("REJECTED") || stateTerm.equals("FAILED")) {
                 System.err.println("FAILURE. Complete statement follows:");
                 System.err.println(bodyText);
                 System.exit(3);
-            } else if (state.equals("ARCHIVED")) {
-                System.out.println("SUCCESS. Deposit has been archived at: "
-                        + getStringFromXml(bodyText,
-                                "//*[local-name() = 'category' and @scheme = 'http://purl.org/net/sword/terms/state' and @label = 'State']"));
+            } else if (stateTerm.equals("ARCHIVED")) {
+                System.out.println("SUCCESS. Deposit has been archived at: " + stateText);
                 System.out.println("Complete statement follows:");
                 System.out.println(bodyText);
                 System.exit(0);
@@ -118,11 +131,11 @@ public class Common {
         return HttpClients.custom().setDefaultCredentialsProvider(credsProv).build();
     }
 
-    public static CloseableHttpResponse sendChunk(DigestInputStream dis, int size, String method, URI iri, String filename, String mimeType, CloseableHttpClient http, boolean inProgress) throws Exception {
+    public static CloseableHttpResponse sendChunk(DigestInputStream dis, int size, String method, IRI iri, String filename, String mimeType, CloseableHttpClient http, boolean inProgress) throws Exception {
         // System.out.println(String.format("Sending chunk to %s, filename = %s, chunk size = %d, MIME-Type = %s, In-Progress = %s ... ", iri.toString(), filename, size, mimeType, Boolean.toString(inProgress)));
         byte[] chunk = readChunk(dis, size);
         String md5 = new String(Hex.encodeHex(dis.getMessageDigest().digest()));
-        HttpUriRequest request = RequestBuilder.create(method).setUri(iri).setConfig(RequestConfig.custom()
+        HttpUriRequest request = RequestBuilder.create(method).setUri(iri.toURI()).setConfig(RequestConfig.custom()
         /*
          * When using an HTTPS-connection this EXPECT-CONTINUE must be enabled, otherwise buffer overflow may follow
          */
