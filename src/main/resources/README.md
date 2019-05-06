@@ -57,5 +57,5 @@ The second command can be used to verify that the bag is valid according to the 
 
 It is important to keep in mind that `metadata/files.xml` is not updated automatically by this tool, and must be updated manually if any files are added or removed from the bag.
 
-[DANS BagIt profile]: https://github.com/DANS-KNAW/easy-specs/blob/master/dans-bagit-profile/v0/dans-bagit-profile-v0.md
+[DANS BagIt profile]: https://doi.org/10.17026/dans-z52-ybfe
 
