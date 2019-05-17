@@ -52,11 +52,16 @@ public class SimpleDeposit {
         depositPackage(tempCopy, colIri, uid, pw);
     }
 
-    public static URI depositPackage(File bagDir, IRI colIri, String uid, String pw) throws Exception {
-        // 0. Zip the bagDir
-        File zipFile = new File(bagDir.getAbsolutePath() + ".zip");
-        zipFile.delete();
-        Common.zipDirectory(bagDir, zipFile);
+    public static URI depositPackage(File bag, IRI colIri, String uid, String pw) throws Exception {
+        // 0. Zip the bag if it isn't yet.
+        File zipFile = null;
+        if (bag.isDirectory()) {
+            zipFile = new File(bag.getAbsolutePath() + ".zip");
+            zipFile.delete();
+            Common.zipDirectory(bag, zipFile);
+        } else {
+            zipFile = bag;
+        }
 
         // 1. Set up stream for calculating MD5
         MessageDigest md = MessageDigest.getInstance("MD5");
