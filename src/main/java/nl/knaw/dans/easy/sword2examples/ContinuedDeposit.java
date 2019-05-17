@@ -30,7 +30,7 @@ import java.security.MessageDigest;
 public class ContinuedDeposit {
     public static void main(String[] args) throws Exception {
         if (args.length != 5) {
-            System.err.println("Usage: java nl.knaw.dans.easy.sword2examples.ContinuedDeposit <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag dirname>");
+            System.err.println("Usage: java nl.knaw.dans.easy.sword2examples.ContinuedDeposit <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag file/dir>");
             System.exit(1);
         }
 
@@ -39,9 +39,9 @@ public class ContinuedDeposit {
         final String uid = args[1];
         final String pw = args[2];
         final int chunkSize = Integer.parseInt(args[3]);
-        final String bagFileName = args[4];
+        final String bagFile = args[4];
 
-        depositPackage(new File(bagFileName), colIri, uid, pw, chunkSize);
+        depositPackage(new File(bagFile), colIri, uid, pw, chunkSize);
     }
 
     public static URI depositPackage(File bag, IRI colIri, String uid, String pw, int chunkSize) throws Exception {
