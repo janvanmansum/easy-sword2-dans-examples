@@ -21,6 +21,8 @@ flow
     ├── audiences
     ├── embargoed
     ├── file-accessibilities
+    ├── inaccessible
+    ├── invisible
     ├── multisurface
     ├── revision01
     ├── revision02
@@ -36,7 +38,9 @@ A short summary of each of the resources follows:
 * valid: all of the bags in this directory are configured to ingest without any errors. These may be used to see how to make use of different features of the client.
   - audiences: This bag contains multiple `<ddm:audience>` entries, each audience is represented by a code which can be found in the [NARCIS classification].
   - embargoed: This bag makes use of the <ddm:available> field to put all files under embargo until a specified date.
-  - file-accessibilities:  This dataset can be used to test the different file visibility options that are available, these can be found under `metadata/files.xml`.
+  - file-accessibilities: This dataset can be used to test the different file visibility options that are available, these can be found under `metadata/files.xml`.
+  - inaccessible: This dataset can be used to test with all files accessible to nobody, these can be found under `metadata/files.xml`.
+  - invisible: This dataset can be used to test with all files visible to nobody, these can be found under `metadata/files.xml`.
   - multisurface: this bag makes use of the http://www.opengis.net/gml xml namespace to allow the user to include polygons which may be used to describe geographical regions. These can be accessed by downloading the dataset metadata after the dataset has been uploaded.
   - revision01-03: These bags are different revisions of the same bag. They may be used to test the sequence deposit classes.
 
