@@ -6,9 +6,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/">
     <ddm:profile>
-        <dc:title>Invalid bag - ddm:available has a duplicate entry</dc:title>
+        <dc:title>A sample dataset that contains files with different levels of accessibility</dc:title>
         <dcterms:description>
-            This bag contains a duplicate entry of the ddm:available field in the metadata, which will cause it to be rejected during the validation step of the submission.
+            This dataset can be used to test the different file visibility options that are available, these can be found in the files.xml.
         </dcterms:description>
         <dcx-dai:creatorDetails>
             <dcx-dai:author>
@@ -23,15 +23,15 @@
         </dcx-dai:creatorDetails>
         <ddm:created>2015-09-09</ddm:created>
         <ddm:available>2015-09-08</ddm:available>
-        <ddm:available>2015-09-09</ddm:available>
         <ddm:audience>D16300</ddm:audience>
-        <ddm:accessRights>NO_ACCESS</ddm:accessRights>
+        <ddm:accessRights>OPEN_ACCESS_FOR_REGISTERED_USERS</ddm:accessRights>
     </ddm:profile>
     <ddm:dcmiMetadata>
-        <dcterms:identifier xsi:type="id-type:DOI">10.17026/test-two-dates-example</dcterms:identifier>
         <dcterms:hasVersion>1.1</dcterms:hasVersion>
-        <dcterms:modified>2015-09-08</dcterms:modified>
+        <dcterms:identifier xsi:type="id-type:DOI">10.17026/test-invisible-example</dcterms:identifier>
+	<dcterms:modified>2015-09-08</dcterms:modified>
         <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
         <dcterms:rightsHolder>I Lastname</dcterms:rightsHolder>
+        <ddm:relation href="http://example.org/">Example relation that links to a web page</ddm:relation>
     </ddm:dcmiMetadata>
 </ddm:DDM>
