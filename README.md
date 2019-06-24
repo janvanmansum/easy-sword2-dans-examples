@@ -6,7 +6,7 @@ The examples in this project show how to implement a client in Java that interac
 Introduction
 ------------
 
-Depositing in EASY via the SWORD v2.0 protocol is basically a two-phase process:
+Depositing in EASY via the [SWORD v2.0 protocol] is basically a two-phase process:
 
 * Submitting a deposit for ingest.
 * Tracking the state of the deposit as it goes through the ingest-flow, until it reaches ARCHIVED status.
@@ -70,7 +70,17 @@ different flows. The flow configured for your account will be one of the followi
 The output will take the following form, starting with the part of the response representing step 2. The UUID will of course be different.
 
 	SUCCESS. Deposit receipt follows:
-	<entry xmlns="http://www.w3.org/2005/Atom"><generator uri="http://www.swordapp.org/" version="2.0" /><id>https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id><link href="https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit" /><link href="https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/add" /><link href="https://act.easy.dans.knaw.nl/sword2/media/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit-media" /><packaging xmlns="http://purl.org/net/sword/terms/">http://purl.org/net/sword/package/BagIt</packaging><link href="https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/statement" type="application/atom+xml; type=feed" /><treatment xmlns="http://purl.org/net/sword/terms/">[1] unpacking [2] verifying integrity [3] storing persistently</treatment><verboseDescription xmlns="http://purl.org/net/sword/terms/">received successfully: bag.zip; MD5: 494dd614e36edf5c929403ed7625b157</verboseDescription></entry>
+	<entry xmlns="http://www.w3.org/2005/Atom">
+	    <generator uri="http://www.swordapp.org/" version="2.0" />
+	    <id>https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
+	    <link href="https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit" />
+	    <link href="https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/add" />
+	    <link href="https://act.easy.dans.knaw.nl/sword2/media/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit-media" />
+	    <packaging xmlns="http://purl.org/net/sword/terms/">http://purl.org/net/sword/package/BagIt</packaging>
+	    <link href="https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/statement" type="application/atom+xml; type=feed" />
+	    <treatment xmlns="http://purl.org/net/sword/terms/">[1] unpacking [2] verifying integrity [3] storing persistently</treatment>
+	    <verboseDescription xmlns="http://purl.org/net/sword/terms/">received successfully: bag.zip; MD5: 494dd614e36edf5c929403ed7625b157</verboseDescription>
+	</entry>
 	Retrieving Statement IRI (Stat-IRI) from deposit receipt ...
 	Stat-IRI = https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4
 
@@ -88,7 +98,41 @@ The 5th and final step of the process is represented by the following response m
 	SUCCESS.
 	Deposit has been archived at: <urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4>.  With DOI: [10.17026/test-Lwgy-zrn-jfyy]. Dataset landing page will be located at: <https://act.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24>.
 	Complete statement follows:
-	<feed xmlns="http://www.w3.org/2005/Atom"><id>https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id><link href="https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="self" /><title type="text">Deposit a5bb644a-78a3-47ae-907a-0bdf162a0cd4</title><author><name>DANS-EASY</name></author><updated>2019-05-23T14:51:15.356Z</updated><category term="ARCHIVED" scheme="http://purl.org/net/sword/terms/state" label="State">http://act.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24</category><entry><content type="multipart/related" src="urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4" /><id>urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id><title type="text">Resource urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4</title><summary type="text">Resource Part</summary><updated>2019-05-23T14:51:22.342Z</updated><link href="https://doi.org/10.5072/dans-Lwgy-zrn-jfyy" rel="self" /></entry></feed>
+	<feed xmlns="http://www.w3.org/2005/Atom">
+	    <id>https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
+	    <link href="https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="self" />
+	    <title type="text">Deposit a5bb644a-78a3-47ae-907a-0bdf162a0cd4</title>
+	    <author>
+	        <name>DANS-EASY</name>
+	    </author>
+	    <updated>2019-05-23T14:51:15.356Z</updated>
+	    <category term="ARCHIVED" scheme="http://purl.org/net/sword/terms/state" label="State">http://act.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24</category>
+	    <entry>
+	        <content type="multipart/related" src="urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4" />
+	        <id>urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
+	        <title type="text">Resource urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4</title>
+	        <summary type="text">Resource Part</summary>
+	        <updated>2019-05-23T14:51:22.342Z</updated>
+	        <link href="https://doi.org/10.5072/dans-Lwgy-zrn-jfyy" rel="self" />
+	    </entry>
+	 </feed>
+
+#### Statuses
+The deposit will go through a number of statuses. The following statuses are possible after sending a SWORD deposit:
+
+State                         | Description
+------------------------------|------------------------------------------------------------
+`DRAFT`                       | Open for additional data.
+`FINALIZING`                  | Closed and being checked for validity.
+`UPLOADED`                    | Deposit uploaded, waiting to be finalized.
+`INVALID`                     | Does **not** contain a valid bag.
+`SUBMITTED`                   | Valid and waiting for processing by `easy-ingest-flow`, or being processed in it.
+`REJECTED`                    | Did not meet the requirements set by `easy-ingest-flow` for this type of deposit.
+`FAILED`                      | Failed to be archived because of some unexpected condition.
+`ARCHIVED`                    | Was successfully archived in the data vault.
+
+If an error occurs the deposit will end up INVALID, REJECTED (client error) or FAILED (server error). 
+The text of the `category` element will contain details about the state. 
 
 Next steps
 ----------
@@ -102,7 +146,6 @@ Some examples of bags which meet the specifications of the SWORD depositing inte
 These bags are categorized by the flow which they are designed for. You can use these as starting points for you test data or start a
 new bag from scratch (see next section).
 
-[resources directory]: https://github.com/DANS-KNAW/easy-sword2-dans-examples/tree/master/src/main/resources
 
 #### Creating your own examples
 To upload a dataset it must be properly formatted. Some example bags can be found in the [resources directory], as well as the specifications the bags must follow.
@@ -117,9 +160,6 @@ through the `brew` command. See [this blog post](https://patchbay.tech/2018/03/1
 5. Update the checksums with `bagit makecomplete my-bag my-bag --payloadmanifestalgorithm SHA1`
 6. verify that the bag is valid according to Bagit with `bagit verifyvalid my-bag`
 
-[BagIt]: https://datatracker.ietf.org/doc/draft-kunze-bagit
-[DANS BagIt Profile]: https://github.com/DANS-KNAW/dans-bagit-profile/blob/master/versions/0.0.0.md
-[xmllint]: http://xmlsoft.org/xmllint.html
 
 ### Testing different scenarios
 This project contains 4 [Java example programs] which can be used as a guide to writing a custom client to deposit datasets using the SWORD2 protocol. 
@@ -134,8 +174,6 @@ The copying step has been built in because in some examples the bag must be modi
 
 The `Common.java` class contains elements which are used by all the other classes. This would include parsing, zipping and sending of files. 
  
-[Java Example programs]: https://github.com/DANS-KNAW/easy-sword2-dans-examples/tree/master/src/main/java/nl/knaw/dans/easy/sword2examples
-
 The project directory contains a `run.sh` script that can be used to invoke the Java programs. For example:
 
 	mvn clean install # Only necessary if the code was not previously built.
@@ -144,4 +182,9 @@ The project directory contains a `run.sh` script that can be used to invoke the 
 	./run.sh SequenceSimple https://act.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
 	./run.sh SequenceContinued https://act.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
 
-
+[Java Example programs]: https://github.com/DANS-KNAW/easy-sword2-dans-examples/tree/master/src/main/java/nl/knaw/dans/easy/sword2examples
+[resources directory]: https://github.com/DANS-KNAW/easy-sword2-dans-examples/tree/master/src/main/resources
+[BagIt]: https://datatracker.ietf.org/doc/draft-kunze-bagit
+[DANS BagIt Profile]: https://doi.org/10.17026/dans-z52-ybfe
+[xmllint]: http://xmlsoft.org/xmllint.html
+[SWORD v2.0 protocol]: http://swordapp.org/sword-v2/
