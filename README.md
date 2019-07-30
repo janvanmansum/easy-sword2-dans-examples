@@ -123,13 +123,13 @@ The deposit will go through a number of statuses. The following statuses are pos
 State                         | Description
 ------------------------------|------------------------------------------------------------
 `DRAFT`                       | Open for additional data.
+`UPLOADED`                    | Completely uploaded, closed for additional data and waiting to be finalized.
 `FINALIZING`                  | Closed and being checked for validity.
-`UPLOADED`                    | Deposit uploaded, waiting to be finalized.
 `INVALID`                     | Does **not** contain a valid bag.
-`SUBMITTED`                   | Valid and waiting for processing by `easy-ingest-flow`, or being processed in it.
-`REJECTED`                    | Did not meet the requirements set by `easy-ingest-flow` for this type of deposit.
+`SUBMITTED`                   | Valid and waiting for processing, or currently being processed by the EASY Ingest Flow.
+`REJECTED`                    | Did not meet the requirements of EASY Ingest Flow for this type of deposit.
 `FAILED`                      | Failed to be archived because of some unexpected condition.
-`ARCHIVED`                    | Was successfully archived in the data vault.
+`ARCHIVED`                    | Successfully archived in the data vault.
 
 If an error occurs the deposit will end up INVALID, REJECTED (client error) or FAILED (server error). 
 The text of the `category` element will contain details about the state. 
