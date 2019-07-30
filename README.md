@@ -28,11 +28,11 @@ In case the server encountered an unknown error `FAILED` will be returned.
 
 Getting started
 ---------------
-The following is a step-by-step instruction on how to run a simple example using the DANS acceptance test server at https://act.easy.dans.knaw.nl/. 
+The following is a step-by-step instruction on how to run a simple example using the DANS acceptance test server at https://demo.easy.dans.knaw.nl/. 
 
 ### Getting access to the acceptance server
 1. From your account manager at DANS request access to the acceptance test server. The account manager will provide the information necessary to connect.
-2. Create an EASY account via https://act.easy.dans.knaw.nl/ui/register.
+2. Create an EASY account via https://demo.easy.dans.knaw.nl/ui/register.
 3. From your account manager at DANS request the account to be enabled for SWORD deposits.
 4. From your account manager at DANS inquire which flow (see next section) the account is configured for.
 
@@ -55,7 +55,7 @@ different flows. The flow configured for your account will be one of the followi
 2. Execute the following command from the base directory of you clone of this project: 
    
    ```
-   ./run.sh Simple https://act.easy.dans.knaw.nl/sword2/collection/1 <user> <password> <bag>
+   ./run.sh Simple https://demo.easy.dans.knaw.nl/sword2/collection/1 <user> <password> <bag>
    ```
    
    Fill in:
@@ -72,17 +72,17 @@ The output will take the following form, starting with the part of the response 
 	SUCCESS. Deposit receipt follows:
 	<entry xmlns="http://www.w3.org/2005/Atom">
 	    <generator uri="http://www.swordapp.org/" version="2.0" />
-	    <id>https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
-	    <link href="https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit" />
-	    <link href="https://act.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/add" />
-	    <link href="https://act.easy.dans.knaw.nl/sword2/media/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit-media" />
+	    <id>https://demo.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
+	    <link href="https://demo.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit" />
+	    <link href="https://demo.easy.dans.knaw.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/add" />
+	    <link href="https://demo.easy.dans.knaw.nl/sword2/media/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit-media" />
 	    <packaging xmlns="http://purl.org/net/sword/terms/">http://purl.org/net/sword/package/BagIt</packaging>
-	    <link href="https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/statement" type="application/atom+xml; type=feed" />
+	    <link href="https://demo.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/statement" type="application/atom+xml; type=feed" />
 	    <treatment xmlns="http://purl.org/net/sword/terms/">[1] unpacking [2] verifying integrity [3] storing persistently</treatment>
 	    <verboseDescription xmlns="http://purl.org/net/sword/terms/">received successfully: bag.zip; MD5: 494dd614e36edf5c929403ed7625b157</verboseDescription>
 	</entry>
 	Retrieving Statement IRI (Stat-IRI) from deposit receipt ...
-	Stat-IRI = https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4
+	Stat-IRI = https://demo.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4
 
 As the deposit is being processed by the server the client polls the Stat-IRI to track the status of the deposit. During this stage steps 3 and 4 are performed. 
 	
@@ -96,17 +96,17 @@ The 5th and final step of the process is represented by the following response m
 
 	Checking deposit status ... ARCHIVED
 	SUCCESS.
-	Deposit has been archived at: <urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4>.  With DOI: [10.17026/test-Lwgy-zrn-jfyy]. Dataset landing page will be located at: <https://act.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24>.
+	Deposit has been archived at: <urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4>.  With DOI: [10.17026/test-Lwgy-zrn-jfyy]. Dataset landing page will be located at: <https://demo.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24>.
 	Complete statement follows:
 	<feed xmlns="http://www.w3.org/2005/Atom">
-	    <id>https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
-	    <link href="https://act.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="self" />
+	    <id>https://demo.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
+	    <link href="https://demo.easy.dans.knaw.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="self" />
 	    <title type="text">Deposit a5bb644a-78a3-47ae-907a-0bdf162a0cd4</title>
 	    <author>
 	        <name>DANS-EASY</name>
 	    </author>
 	    <updated>2019-05-23T14:51:15.356Z</updated>
-	    <category term="ARCHIVED" scheme="http://purl.org/net/sword/terms/state" label="State">http://act.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24</category>
+	    <category term="ARCHIVED" scheme="http://purl.org/net/sword/terms/state" label="State">http://demo.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24</category>
 	    <entry>
 	        <content type="multipart/related" src="urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4" />
 	        <id>urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
@@ -177,10 +177,10 @@ The `Common.java` class contains elements which are used by all the other classe
 The project directory contains a `run.sh` script that can be used to invoke the Java programs. For example:
 
 	mvn clean install # Only necessary if the code was not previously built.
-	./run.sh Simple https://act.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword bag
-	./run.sh Continued https://act.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword chunksize bag
-	./run.sh SequenceSimple https://act.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
-	./run.sh SequenceContinued https://act.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
+	./run.sh Simple https://demo.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword bag
+	./run.sh Continued https://demo.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword chunksize bag
+	./run.sh SequenceSimple https://demo.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
+	./run.sh SequenceContinued https://demo.easy.dans.knaw.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
 
 [Java Example programs]: https://github.com/DANS-KNAW/easy-sword2-dans-examples/tree/master/src/main/java/nl/knaw/dans/easy/sword2examples
 [resources directory]: https://github.com/DANS-KNAW/easy-sword2-dans-examples/tree/master/src/main/resources
