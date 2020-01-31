@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016-17 DANS - Data Archiving and Networked Services (info@dans.knaw.nl)
+ * Copyright (C) 2016 DANS - Data Archiving and Networked Services (info@dans.knaw.nl)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Common {
     static final String BAGIT_URI = "http://purl.org/net/sword/package/BagIt";
@@ -187,8 +186,7 @@ public class Common {
     }
 
     public static CloseableHttpResponse sendChunk(DigestInputStream dis, int size, String method, URI uri, String filename, String mimeType,
-            CloseableHttpClient http, boolean inProgress) throws Exception
-    {
+                                                  CloseableHttpClient http, boolean inProgress) throws Exception {
         // System.out.println(String.format("Sending chunk to %s, filename = %s, chunk size = %d, MIME-Type = %s, In-Progress = %s ... ", uri.toString(),
         // filename, size, mimeType, Boolean.toString(inProgress)));
         byte[] chunk = readChunk(dis, size);
@@ -240,9 +238,25 @@ public class Common {
     }
 
     public static File copyToTarget(File dir) throws Exception {
-        File dirInTarget = new File("target", dir.getName());
-        FileUtils.deleteQuietly(dirInTarget);
-        FileUtils.copyDirectory(dir, dirInTarget);
+        File dirInTarget = null;
+        if (dir.isDirectory()) {
+            dirInTarget = new File("target", dir.getName());
+            FileUtils.deleteQuietly(dirInTarget);
+            FileUtils.copyDirectory(dir, dirInTarget);
+        } else {
+            ZipFile zf = new ZipFile(dir);
+            if (!zf.isValidZipFile()) {
+                System.err.println("ERROR: The submitted bag is not a valid directory or Zipfile");
+                System.exit(1);
+            } else {
+                File zipInTarget = new File("target", dir.getName());
+                FileUtils.deleteQuietly(zipInTarget);
+                dirInTarget = new File("target", ZipComponent.getBaseDirName(dir.toString()));
+                FileUtils.deleteQuietly(dirInTarget);
+                zf.extractAll("target");
+            }
+        }
         return dirInTarget;
     }
 }
+
